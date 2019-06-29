@@ -1,0 +1,17 @@
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_eye_tree_eyeglasses.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_eye.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_frontalcatface_extended.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_frontalcatface.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_frontalface_alt2.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_frontalface_alt_tree.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_frontalface_alt.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_frontalface_default.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_fullbody.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_lefteye_2splits.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_licence_plate_rus_16stages.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_lowerbody.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_profileface.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_righteye_2splits.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_russian_plate_number.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_smile.xml
+wget https://raw.githubusercontent.com/opencv/opencv/2.4.10/data/haarcascades/haarcascade_upperbody.xml
