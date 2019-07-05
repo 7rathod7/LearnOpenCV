@@ -27,12 +27,12 @@ void my_mouse_callback( int event, int x, int y, int flags, void* param ) {
                 box.height = y - box.y;
             }
             break;
-        
+
         case CV_EVENT_LBUTTONDOWN:
             drawing_box = true;
             box = cvRect( x, y, 0, 0 );
             break;
-        
+
         case CV_EVENT_LBUTTONUP:
             drawing_box = false;
             if ( box.width < 0 ) {
@@ -44,7 +44,7 @@ void my_mouse_callback( int event, int x, int y, int flags, void* param ) {
                 box.height *= -1;
             }
             draw_box( image );
-        
+
         default:
             break;
     }
@@ -59,7 +59,14 @@ int main( int argc, char **argv ) {
         IPL_DEPTH_8U,
         3
     );
+
+    if( image == NULL ) {
+        fprintf( stderr, "Error : could not create image\n");
+        exit( 1 );
+    }
+
     cvZero( image );
+    /*! cloning whatever the data stored in image to temp, releasing temp would make image unreferenced */
     IplImage *temp = cvCloneImage( image );
 
     cvNamedWindow( "Box Example" );
@@ -85,7 +92,7 @@ int main( int argc, char **argv ) {
         if ( cvWaitKey( 15 ) == 27 ) break;
     }
 
-    /*! Be tidy */
+    /*! Being Tidy */
     cvReleaseImage ( &image );
     cvReleaseImage ( &temp );
     cvDestroyWindow ( "Box Example" );

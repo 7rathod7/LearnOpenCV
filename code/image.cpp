@@ -1,20 +1,14 @@
-/*
- * header
- */
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include <iostream>
 
 using namespace std;
 
-/*
- * globals
- */
 IplImage *img2;
 char *window_name;
 
-/*
- * define our callback which we will install for mouse events
+/*!
+    define our callback which we will install for mouse events
  */
 void my_mouse_callback( int event, int x, int y, int flags, void* param ) {
     IplImage *image = (IplImage*) param;
@@ -25,12 +19,12 @@ void my_mouse_callback( int event, int x, int y, int flags, void* param ) {
     switch ( event ) {
         case CV_EVENT_MOUSEMOVE:
             break;
-        
+
         case CV_EVENT_LBUTTONDOWN:
             pinput = (uchar*)image->imageData;
-            b = pinput[ x * image->widthStep + y * image->nChannels + 0];
-            g = pinput[ x * image->widthStep + y * image->nChannels + 1];
-            r = pinput[ x * image->widthStep + y * image->nChannels + 2];
+            b = pinput[ y * image->widthStep + x * image->nChannels + 0];
+            g = pinput[ y * image->widthStep + x * image->nChannels + 1];
+            r = pinput[ y * image->widthStep + x * image->nChannels + 2];
             cvCopy( image, img2 );
             sprintf( co_ord_x, "%d", r );
             sprintf( co_ord_y, "%d", g );
@@ -47,7 +41,7 @@ void my_mouse_callback( int event, int x, int y, int flags, void* param ) {
             // co_ord_x = x + '0';     // not working
             // cout << co_ord_x << "\n";
             break;
-        
+
         case CV_EVENT_LBUTTONUP:
             break;
 
@@ -56,13 +50,15 @@ void my_mouse_callback( int event, int x, int y, int flags, void* param ) {
     }
 }
 
-/*
- * main function
- */
 int main( int argc, char** argv ) {
 
+    if( argc != 2 ) {
+        fprintf( stderr, "Error : invalid number of arguments, pass 2 arguments\n");
+        exit( 1 );
+    }
+
     window_name = argv[1];
-    
+
 
     IplImage* img = cvLoadImage( argv[1], CV_LOAD_IMAGE_ANYCOLOR );
     img2 = cvCreateImage(
@@ -71,7 +67,7 @@ int main( int argc, char** argv ) {
         img->nChannels
     );
     cvCopy( img, img2 );
-    
+
     // passing 0 in second argument, will make the window resize
     cvNamedWindow( argv[1], CV_WINDOW_AUTOSIZE );
     cvSetMouseCallback(
@@ -98,14 +94,14 @@ int main( int argc, char** argv ) {
     // CvFont a;
     // cvInitFont( &a, CV_FONT_HERSHEY_SIMPLEX, 1, 1);
     // cvPutText( img2, "jennifer", cvPoint( 10, 30 ), &a , cvScalar(255) );
-    
+
     cvShowImage( argv[1], img2 );
     // cout << cvGetWindowProperty( argv[1], CV_CAP_PROP_FRAME_WIDTH );
     cvWaitKey( 0 );
 
     // specifying file format is must
     // cvSaveImage( "saved.jpg", img );
-    
+
     cvReleaseImage(&img);
     cvReleaseImage(&img2);
     cvDestroyWindow( argv[1] );

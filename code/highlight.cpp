@@ -1,8 +1,6 @@
-/*! */
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 #include <iostream>
-#include <math.h>
 
 using namespace std;
 
@@ -86,7 +84,7 @@ void RGB_hist(IplImage *img) {
             // int u = ceil( 395 * (r_values[i] * 1.0 / sum ) );
             // cout <<  ceil( 395 * (r_values[i] * 1.0 / sum ) ) << "\n";
             cvSetImageROI( temp, cvRect( 100 * i, 395 - ceil( 395 * (r_values[i] * 1.0 / sum ) ), 95, ceil( 395 * (r_values[i] * 1.0 / sum ) ) ));
-            /*! cvScalar ( B, G, R ) */ 
+            /*! cvScalar ( B, G, R ) */
             if ( k == 2 ) cvAddS( temp,  cvScalar( 0, 0, 200 ), temp );
             if ( k == 1 ) cvAddS( temp,  cvScalar( 0, 200, 0 ), temp );
             if ( k == 0 ) cvAddS( temp,  cvScalar( 200, 0, 0 ), temp );
@@ -102,9 +100,7 @@ void RGB_hist(IplImage *img) {
     cvReleaseImage( &temp );
 }
 
-/*
- * define our callback which we will install for mouse events
- */
+/*! define our callback which we will install for mouse events  */
 void my_mouse_callback( int event, int x, int y, int flags, void* param ) {
     IplImage *image = (IplImage*) param;
     switch ( event ) {
@@ -114,14 +110,14 @@ void my_mouse_callback( int event, int x, int y, int flags, void* param ) {
                 box.height = y - box.y;
             }
             break;
-        
+
         case CV_EVENT_LBUTTONDOWN:
             // cout << "left mouse button is down\n";
             drawing_box = true;
             box = cvRect( x, y, 0, 0 );
             cvCopy( orig, image );
             break;
-        
+
         case CV_EVENT_LBUTTONUP:
             drawing_box = false;
             if ( box.width < 0 ) {
@@ -133,8 +129,8 @@ void my_mouse_callback( int event, int x, int y, int flags, void* param ) {
                 box.height *= -1;
             }
             draw_box( image );
-            RGB_hist( image );
-        
+            if( box.width > 0 && box.height > 0) RGB_hist( image );
+
         default:
             break;
     }
@@ -155,19 +151,19 @@ int main( int argc, char** argv ) {
 
     cvNamedWindow( "Box Example" );
 
-    // here is the crucial moment that we actually install the callback
-    // Note that we set the value 'param' to be the image we are working with so
-    // that the callback will have the image to edit
+    /*! here is the crucial moment that we actually install the callback
+        Note that we set the value 'param' to be the image we are working with so
+        that the callback will have the image to edit    */
     cvSetMouseCallback(
         "Box Example",
         my_mouse_callback,
         ( void * ) image
     );
 
-    // the main program loop. here we copy the working image
-    // to the temp image and if the user is drawing, then put
-    // the currently contemplated box onto that temp image
-    // display the temp image, and wait 15ms for a keystroke the repeat
+    /*! the main program loop. here we copy the working image
+        to the temp image and if the user is drawing, then put
+        the currently contemplated box onto that temp image
+        display the temp image, and wait 15ms for a keystroke the repeat */
     while( 1 ) {
         cvCopy( image, temp );
         if ( drawing_box ) draw_box( temp );

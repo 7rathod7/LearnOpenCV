@@ -1,4 +1,4 @@
-/*! smoothing program */ 
+/*! smoothing program */
 #include <opencv/cv.h>
 #include <opencv/highgui.h>
 
@@ -13,63 +13,64 @@
 int main( int argc, char **argv ) {
 	if ( argc != 2) {
 		fprintf( stderr, "Error : input number of argument , plz provide only 2 command line arg\n" );
-		return -1;
+		exit( 1 );
 	}
 
-	/*! 3, 5, 9, 11 */ 
+	/*! gaussian kernel of sizes 3, 5, 9, 11 */
 	IplImage *input_image = cvLoadImage( argv[1], CV_LOAD_IMAGE_UNCHANGED ), *output_image;
-	cvNamedWindow( "original image", CV_WINDOW_AUTOSIZE );
-	cvNamedWindow( "3x3", CV_WINDOW_AUTOSIZE );
-	cvNamedWindow( "5x5", CV_WINDOW_AUTOSIZE );
-	cvNamedWindow( "9x9", CV_WINDOW_AUTOSIZE );
-	cvNamedWindow( "11x11", CV_WINDOW_AUTOSIZE );
-	cvNamedWindow( "2x5x5", CV_WINDOW_AUTOSIZE );
-	cvNamedWindow( "2x11x11", CV_WINDOW_AUTOSIZE );
-	cvMoveWindow( "3x3", input_image->width, 80 );
-	cvMoveWindow( "5x5", 2*input_image->width, 80 );
-	cvMoveWindow( "9x9", 3*input_image->width, 80 );
-	cvMoveWindow( "11x11", 0 , 80 + input_image->height );
-	cvMoveWindow( "2x5x5", input_image->width, 80 + input_image->height );
-	cvMoveWindow( "2x11x11", 2*input_image->width, 80 + input_image->height );
 
-	output_image = cvCreateImage( 
+	if( input_image == NULL ) {
+        fprintf( stderr, "Error : failed to load image\n");
+        exit( 1 );
+	}
+
+	output_image = cvCreateImage(
 		cvGetSize( input_image ),
 		IPL_DEPTH_8U,
 		3
 	);
 
-	/*! reduces region / brightness decreases  */
+	if( output_image == NULL ) {
+        fprintf( stderr, "Error : failed to create image\n");
+        exit( 1 );
+	}
 
+    cvNamedWindow( "original image", CV_WINDOW_AUTOSIZE );
 	cvShowImage( "original image", input_image );
 
-	/*! expands region / brightness increases  */
 
 	cvSmooth( input_image, output_image, CV_GAUSSIAN, 3, 3 );
-
+    cvNamedWindow( "3x3", CV_WINDOW_AUTOSIZE );
+    cvMoveWindow( "3x3", input_image->width, 80 );
 	cvShowImage( "3x3", output_image );
 
 	cvSmooth( input_image, output_image, CV_GAUSSIAN, 5, 5 );
-
+    cvNamedWindow( "5x5", CV_WINDOW_AUTOSIZE );
+    cvMoveWindow( "5x5", 2*input_image->width, 80 );
 	cvShowImage( "5x5", output_image );
 
 	cvSmooth( input_image, output_image, CV_GAUSSIAN, 9, 9 );
-
+    cvNamedWindow( "9x9", CV_WINDOW_AUTOSIZE );
+    cvMoveWindow( "9x9", 3*input_image->width, 80 );
 	cvShowImage( "9x9", output_image );
 
 	cvSmooth( input_image, output_image, CV_GAUSSIAN, 11, 11 );
-
+    cvNamedWindow( "11x11", CV_WINDOW_AUTOSIZE );
+    cvMoveWindow( "11x11", 0 , 80 + input_image->height );
 	cvShowImage( "11x11", output_image );
 
 	cvSmooth( input_image, output_image, CV_GAUSSIAN, 5, 5 );
 	cvSmooth( output_image, output_image, CV_GAUSSIAN, 5, 5 );
-
+    cvNamedWindow( "2x5x5", CV_WINDOW_AUTOSIZE );
+	cvMoveWindow( "2x5x5", input_image->width, 80 + input_image->height );
 	cvShowImage( "2x5x5", output_image );
 
 	cvSmooth( input_image, output_image, CV_GAUSSIAN, 11, 11 );
 	cvSmooth( output_image, output_image, CV_GAUSSIAN, 11, 11 );
+    cvNamedWindow( "2x11x11", CV_WINDOW_AUTOSIZE );
+    cvMoveWindow( "2x11x11", 2*input_image->width, 80 + input_image->height );
+	cvShowImage( "2x11x11", output_image );
 
-	cvShowImage( "2x11x11", output_image );		
-	
 	cvWaitKey( 0 );
 
 	cvReleaseImage( &input_image );
